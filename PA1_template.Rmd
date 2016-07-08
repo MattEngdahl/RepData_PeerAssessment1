@@ -9,12 +9,7 @@ output:
 ## Loading and preprocessing the data
 ### 1. Code for reading in the dataset and/or processing the data
 
-First, ensure that dependencies are available:
-```{r echo = TRUE, results = "hide"}
-require(dplyr)
-```
-
-Then I load the activity data into memory from the source, and read it into _data_.  The data used were downloaded on the 8th July 2016 and is also stored in this repository (as _activity.csv_, in case the source data file hosted by Coursera changes or is moved).
+I begin by loading the activity data into memory from the source, and reading it into _data_.  The data used were downloaded on the 8th July 2016 and is also stored in this repository (as _activity.csv_, in case the source data file hosted by Coursera changes or is moved).
 
 ```{r echo = TRUE}
 temp <- tempfile()
@@ -85,7 +80,7 @@ colnames(interval.steps.median) <- c("interval", "median.steps")
 Secondly, using dplyr, the interval.steps.median are merged into a copy of the original 'data' data frame, called 'data.imputed'.
 ```{r echo = TRUE}
 data.imputed <- data
-data.imputed <- dplyr::full_join(data.imputed, interval.steps.median, by = "interval")
+data.imputed <- dplyr:::full_join(data.imputed, interval.steps.median, by = "interval")
 ```
 
 Thirdly, I replace NAs in _data.imputed\$steps_ with values in _data.imputed\$median.steps_

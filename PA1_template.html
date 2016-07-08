@@ -123,18 +123,7 @@ $(document).ready(function () {
 <h2>Loading and preprocessing the data</h2>
 <div id="code-for-reading-in-the-dataset-andor-processing-the-data" class="section level3">
 <h3>1. Code for reading in the dataset and/or processing the data</h3>
-<p>First, ensure that dependencies are available:</p>
-<pre class="r"><code>require(dplyr)</code></pre>
-<pre><code>## Loading required package: dplyr</code></pre>
-<pre><code>## 
-## Attaching package: 'dplyr'</code></pre>
-<pre><code>## The following objects are masked from 'package:stats':
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<p>Then I load the activity data into memory from the source, and read it into <em>data</em>. The data used were downloaded on the 8th July 2016 and is also stored in this repository (as <em>activity.csv</em>, in case the source data file hosted by Coursera changes or is moved).</p>
+<p>I begin by loading the activity data into memory from the source, and reading it into <em>data</em>. The data used were downloaded on the 8th July 2016 and is also stored in this repository (as <em>activity.csv</em>, in case the source data file hosted by Coursera changes or is moved).</p>
 <pre class="r"><code>temp &lt;- tempfile()
 download.file(&quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;, temp, mode = &quot;wb&quot;)
 data &lt;- unzip(temp, &quot;activity.csv&quot;)
@@ -194,7 +183,7 @@ plot(interval.steps[,1], interval.steps[,2], type = &quot;l&quot;, main = &quot;
 colnames(interval.steps.median) &lt;- c(&quot;interval&quot;, &quot;median.steps&quot;)</code></pre>
 <p>Secondly, using dplyr, the interval.steps.median are merged into a copy of the original ‘data’ data frame, called ‘data.imputed’.</p>
 <pre class="r"><code>data.imputed &lt;- data
-data.imputed &lt;- dplyr::full_join(data.imputed, interval.steps.median, by = &quot;interval&quot;)</code></pre>
+data.imputed &lt;- dplyr:::full_join(data.imputed, interval.steps.median, by = &quot;interval&quot;)</code></pre>
 <p>Thirdly, I replace NAs in <em>data.imputed$steps</em> with values in <em>data.imputed$median.steps</em></p>
 <pre class="r"><code>data.imputed$steps[is.na(data.imputed$steps)] &lt;- data.imputed$median.steps[is.na(data.imputed$steps)]</code></pre>
 <p>Finally, I remove the interim <em>data.imputed$median.steps</em> variable as it is now no longer needed.</p>

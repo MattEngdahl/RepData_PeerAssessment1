@@ -4,34 +4,7 @@
 ## Loading and preprocessing the data
 ### 1. Code for reading in the dataset and/or processing the data
 
-First, ensure that dependencies are available:
-
-```r
-require(dplyr)
-```
-
-```
-## Loading required package: dplyr
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-Then I load the activity data into memory from the source, and read it into _data_.  The data used were downloaded on the 8th July 2016 and is also stored in this repository (as _activity.csv_, in case the source data file hosted by Coursera changes or is moved).
+I begin by loading the activity data into memory from the source, and reading it into _data_.  The data used were downloaded on the 8th July 2016 and is also stored in this repository (as _activity.csv_, in case the source data file hosted by Coursera changes or is moved).
 
 
 ```r
@@ -60,7 +33,7 @@ steps <- aggregate(data$steps, list(data$date), FUN = "sum")
 hist(steps[ ,2], breaks = 10, main = "Histogram of number of steps taken per day", xlab = "Number of steps", ylab = "Number of days")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 ### 3. Mean and median number of steps taken each day
 
@@ -93,7 +66,7 @@ interval.steps <- aggregate(data$steps, list(data$interval), FUN = "mean", na.rm
 plot(interval.steps[,1], interval.steps[,2], type = "l", main = "Average steps taken by interval", xlab = "Interval (time of day)", ylab = "Number of steps taken")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 ### 5. The 5-minute interval that, on average, contains the maximum number of steps
 
@@ -134,7 +107,7 @@ Secondly, using dplyr, the interval.steps.median are merged into a copy of the o
 
 ```r
 data.imputed <- data
-data.imputed <- dplyr::full_join(data.imputed, interval.steps.median, by = "interval")
+data.imputed <- dplyr:::full_join(data.imputed, interval.steps.median, by = "interval")
 ```
 
 Thirdly, I replace NAs in _data.imputed\$steps_ with values in _data.imputed\$median.steps_
@@ -160,7 +133,7 @@ steps <- aggregate(data.imputed$steps, list(data.imputed$date), FUN = "sum")
 hist(steps[ ,2], breaks = 10, main = "Histogram of number of steps taken per day", xlab = "Number of steps", ylab = "Number of days")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 The mean:
 
@@ -229,7 +202,7 @@ title("Weekdays", line = -2)
 mtext("Interval period (T.O.D.)", side = 1, line =2.5, cex = .9)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 
 Some differences can be seen in the weekend vs. weekday split for our subject, who appears more sedentary during the week, and more active during the weekend.
 
